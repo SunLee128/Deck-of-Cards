@@ -7,7 +7,7 @@ const API_BASE_URL = "https://deckofcardsapi.com/api/deck"
 class Deck extends Component {
   constructor(props){
     super(props)
-    this.state = {deck:null, drawn: [], remaining: 0}
+    this.state = {deck:null, drawn: [], remaining: 52}
     this.getCard = this.getCard.bind(this)
   }
 
@@ -32,10 +32,11 @@ class Deck extends Component {
             id: card.code,
             image: card.image,
             name: `${card.value} of ${card.suit}`,
-            remaining: cardRes.data.remaining
+            
           }
         ]
       }))
+      this.setState({remaining: cardRes.data.remaining})
     } catch(err) {
       alert(err)
     }
@@ -48,6 +49,7 @@ class Deck extends Component {
     return (
       <div>
         <h1>CARD DEALER</h1>
+        <h2>{this.state.remaining} cards remanining </h2>
         <button onClick={this.getCard}>Get Card</button>
         <div className="Deck-cards">
           {cards}
